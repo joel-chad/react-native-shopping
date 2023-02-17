@@ -7,7 +7,6 @@ import getApi from '../../api/getApi';
 import Banner from '../components/universal/banner';
 import Header from '../components/universal/header.js';
 import React from 'react';
-import {firebase} from '../../methods/firebaseapi'
 
 
 const Homescreen = () => {
@@ -47,13 +46,6 @@ const Homescreen = () => {
   useEffect(()=>{
     getProduct();
     getAllProduct();
-    
-    firebase.firestore().collection('users').get().then((querySnapshot) => {
-      querySnapshot.forEach(snapshot => {
-          let data = snapshot.data();
-          console.log(data);
-      }
-    )})
 },[])
 
 const categorySearch=(data)=>{
