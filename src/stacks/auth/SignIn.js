@@ -1,18 +1,41 @@
 import React, {useState} from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
+import UserServices from '../../services/UserServices'
 
-const SignIn =()=>{
+const SignIn =({navigation})=>{
 //   state={
 //     email:"",
 //     password:""
 //   }
     const [email, setEmail] = useState('')
     const [password, setPassword] =useState('')
-  
+
+    const handlePress = () => {
+      navigation.navigate('SignUp');
+    };
+
+    const login = () =>{
+      console.log("logged in")
+      let data = {
+        "email": email,
+        "password": password
+      }
+
+      UserServices.login(data)
+      .then(res=>{
+        console.log(res);
+                if (res.status === 200 || res.status === 201||res.status === 204) {
+                    console.log(res)
+                    // setLoading(false);
+                }
+      }).catch(err=>{
+        console.log(err)
+      })
+    }
 
     return (
       <View style={styles.container}>
-        <Text style={styles.logo}>Runner</Text>
+        {/* <Text style={styles.logo}>Runner</Text> */}
         <View style={styles.inputView} >
           <TextInput  
             style={styles.inputText}
@@ -31,11 +54,11 @@ const SignIn =()=>{
         <TouchableOpacity>
           <Text style={styles.forgot}>Forgot Password?</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.loginBtn}>
-          <Text style={styles.loginText}>LOGIN</Text>
+        <TouchableOpacity onPress={login} style={styles.loginBtn}>
+          <Text style={styles.loginText}>Log In</Text>
         </TouchableOpacity>
-        <TouchableOpacity>
-          <Text style={styles.loginText}>Signup</Text>
+        <TouchableOpacity onPress={handlePress}>
+          <Text style={styles.signupText}>Don't have an account? Sign Up.</Text>
         </TouchableOpacity>
 
   
@@ -47,7 +70,7 @@ const SignIn =()=>{
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#003f5c',
+    // backgroundColor: '#003f5c',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -59,25 +82,27 @@ const styles = StyleSheet.create({
   },
   inputView:{
     width:"80%",
-    backgroundColor:"#465881",
-    borderRadius:25,
+    // backgroundColor:"#465881",
+    borderRadius:2,
     height:50,
     marginBottom:20,
     justifyContent:"center",
-    padding:20
+    borderBottomColor: 'black',
+    padding:20, 
+    borderBottomWidth: 1
   },
   inputText:{
     height:50,
-    color:"white"
+    color:"black"
   },
   forgot:{
-    color:"white",
-    fontSize:11
+    color:"black",
+    fontSize: 16,
   },
   loginBtn:{
-    width:"80%",
-    backgroundColor:"#fb5b5a",
-    borderRadius:25,
+    width:"60%",
+    backgroundColor:"#aaeebb",
+    borderRadius:3,
     height:50,
     alignItems:"center",
     justifyContent:"center",
@@ -85,7 +110,12 @@ const styles = StyleSheet.create({
     marginBottom:10
   },
   loginText:{
-    color:"white"
+    color:"black"
+  },
+  signupText:{
+    color: "cornflowerblue",
+    fontSize: 16,
+    marginTop: 10
   }
 });
 

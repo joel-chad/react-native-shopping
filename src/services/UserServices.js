@@ -1,0 +1,246 @@
+import axios from "axios";
+import endpointNames from "../configs/serverUrls";
+
+const userUrl = endpointNames.user
+
+let token = JSON.parse(localStorage.getItem("token"))
+let headers
+
+//login function
+const login = async (email, password) => {
+    let response
+    await axios.post(userUrl + '/login', {
+        'email': email,
+        'password': password
+    }).then((r) => {
+        console.log("response ", r)
+        response = r;
+        localStorage.setItem('user',JSON.stringify(r));
+    }).catch(err => {
+        response = err;
+    });
+
+    return response;
+};
+
+//change password
+const changePassword = async (request) => {
+    let response;
+    await axios.post(userUrl + '/changePassword', request)
+        .then(res => {
+            console.log(res);
+            response = res;
+        }).catch(err => {
+            console.log(err);
+            response = err;
+        });
+
+    return response;
+}
+
+//save password
+const savePassword = async (request) => {
+    let response;
+    await axios.post(userUrl + '/savePassword', request)
+        .then(res => {
+            console.log(res);
+            response = res;
+        }).catch(err => {
+            console.log(err);
+            response = err;
+        });
+
+    return response;
+}
+
+//reset password
+const resetPassword = async (request) => {
+    let response;
+    await axios.post(userUrl + '/resetPassword?email=' + request)
+        .then(res => {
+            console.log(res);
+            response = res;
+        })
+        .catch(err => {
+            console.log(err.response.data.message);
+            response = err.response.data.message;
+        });
+    return response;
+}
+
+//logout
+const logout = () => {
+    localStorage.removeItem('user');
+    localStorage.setItem('loggedIn', 'inactive')
+    console.log('Logged Out')
+};
+
+
+//get currentUser
+const getCurrentUser = () => {
+    return JSON.parse(localStorage.getItem('user'));
+};
+
+
+
+const storeUser = (request) => {
+
+    let response;
+    console.log(request)
+    axios
+      .post(userUrl, request)
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        if (error.response) {
+          console.log(error.response);
+          console.log("server responded");
+        } else if (error.request) {
+          console.log("network error");
+        } else {
+          console.log(error);
+        }
+      });
+
+    return response;
+}
+
+const editUser = async (request) => {
+   
+    console.log(request);
+    // let data = {
+
+    //     "firstName": request.firstName,
+    //     "lastName": request.lastName,
+    //     "username": request.username,
+    //     "email": request.email,
+    //     "password": request.password,
+    //     "agentId": 1,
+    //     "clientId": 0,
+    //     "roleId": 1
+    // }
+
+    let response;
+    await axios.put(userUrl + '/edit-user' + '/' + request.id,  request)
+        .then(res => {
+            console.log(res);
+            response = res;
+        })
+        .catch(err => {
+            console.log(err);
+            response = err;
+        });
+
+    return response;
+}
+
+const getAllUsers = async ()=>{
+    const options = {
+        headers : {'Authorization': `Bearer ${token}`,
+            //   'Content-Type': 'application/x-www-form-urlencoded',
+          }
+      }
+    let response;
+    await axios.get(usersUrl + '/admin/0/100', options)
+        .then(res => {
+            response = res;
+        })
+        .catch(err => {
+            console.log(err.response.data.message);
+            response = err.response.data.message;
+        });
+    return response;
+}
+
+const getAllRoles = async ()=>{
+    let response
+        await axios.get(userUrl + "/roles", {
+            headers
+        })
+        .then(res => {
+            console.log(res);
+            response = res;
+        })
+        .catch(err => {
+            console.log(err.response.data.message);
+            response = err.response.data.message;
+        });
+    return response;
+}
+
+
+const getUserById = async (id) => {
+    const options = {
+        headers : {'Authorization': `Bearer ${token}`,
+            //   'Content-Type': 'application/x-www-form-urlencoded',
+          }
+      }
+    let response;
+    await axios.get(usersUrl  + id, options)
+        .then(res => {
+            console.log(res);
+            response = res
+        })
+        .catch(err => {
+            console.log(err);
+            response = err;
+        });
+
+    return response;
+}
+
+//sign up
+const register = async (data) => {
+    let response;
+
+    await axios.post(userUrl + '/registration', data)
+        .then(res => {
+            console.log(res);
+            response = res;
+        })
+        .catch(err => {
+            console.log(err);
+            response = err
+        })
+
+    return response;
+}
+
+const activate = async (id)=>{
+    let response;
+
+    await axios.put(userUrl + `/activate/${id}`)
+        .then(res => {
+            console.log(res);
+            response = res;
+        })
+        .catch(err => {
+            console.log(err);
+            response = err
+        })
+
+    return response;
+}
+
+const deactivate = async (id)=>{
+    let response;
+
+    await axios.put(userUrl + `/deactivate/${id}`)
+        .then(res => {
+            console.log(res);
+            response = res;
+        })
+        .catch(err => {
+            console.log(err);
+            response = err
+        })
+
+    return response;
+}
+
+export default {
+    login, changePassword, resetPassword, logout, getCurrentUser, activate, deactivate,
+    storeUser, savePassword, getAllUsers, getAllRoles, editUser, getUserById, register
+
+}

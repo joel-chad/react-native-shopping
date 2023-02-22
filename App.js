@@ -8,6 +8,7 @@ import SettingsScreen from './src/screens/SettingsScreen'
 import Saved from './src/screens/Saved';
 import Shop from './src/screens/Shop';
 import AccountStacks from './src/stacks/accountArena.js';
+import AuthStacks from './src/stacks/authArena';
 
 const Tab = createBottomTabNavigator();
 
@@ -52,7 +53,7 @@ export default function App() {
                 headerShown:false,
                 headerTitle:'Account'
             }}>
-                {(props)=><AccountStacks {...props} />}
+                {(props)=><AuthStacks {...props} />}
             </Tab.Screen>
 
     </Tab.Navigator>

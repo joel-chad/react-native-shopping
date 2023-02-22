@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
 
-const SignUp =()=>{
+const SignUp =({navigation})=>{
 //   state={
 //     email:"",
 //     password:""
@@ -10,9 +10,17 @@ const SignUp =()=>{
     const [password, setPassword] =useState('')
     const [name, setName]= useState('')
 
+    const handlePress = () => {
+      navigation.navigate('SignIn');
+    };
+
+    const handleSave = () =>{
+      console.log(email)
+    }
+
     return (
       <View style={styles.container}>
-        <Text style={styles.logo}>Runner</Text>
+        {/* <Text style={styles.logo}>Runner</Text> */}
         <View style={styles.inputView} >
           <TextInput  
             style={styles.inputText}
@@ -38,11 +46,11 @@ const SignUp =()=>{
         <TouchableOpacity>
           <Text style={styles.forgot}>Forgot Password?</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.loginBtn}>
+        <TouchableOpacity onPress={handleSave} style={styles.loginBtn}>
           <Text style={styles.loginText}>Sign Up</Text>
         </TouchableOpacity>
         <TouchableOpacity>
-          <Text style={styles.loginText}>Sign In</Text>
+          <Text onPress={handlePress} style={styles.accountText}>Already have an account? Sign In.</Text>
         </TouchableOpacity>
 
   
@@ -54,7 +62,7 @@ const SignUp =()=>{
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#003f5c',
+    // backgroundColor: '#003f5c',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -66,25 +74,27 @@ const styles = StyleSheet.create({
   },
   inputView:{
     width:"80%",
-    backgroundColor:"#465881",
-    borderRadius:25,
+    // backgroundColor:"#465881",
+    borderRadius:2,
     height:50,
     marginBottom:20,
     justifyContent:"center",
-    padding:20
+    borderBottomColor: 'black',
+    padding:20, 
+    borderBottomWidth: 1
   },
   inputText:{
     height:50,
-    color:"white"
+    color:"black"
   },
   forgot:{
-    color:"white",
-    fontSize:11
+    color:"black",
+    fontSize:15
   },
   loginBtn:{
-    width:"80%",
-    backgroundColor:"#fb5b5a",
-    borderRadius:25,
+    width:"60%",
+    backgroundColor:"#aaeebb",
+    borderRadius:3,
     height:50,
     alignItems:"center",
     justifyContent:"center",
@@ -92,7 +102,12 @@ const styles = StyleSheet.create({
     marginBottom:10
   },
   loginText:{
-    color:"white"
+    color: "black"
+  },
+  accountText:{
+    color: "black",
+    fontSize: 16,
+    marginTop: 10
   }
 });
 
