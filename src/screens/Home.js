@@ -8,6 +8,7 @@ import s from '../../styles/mainStyle';
 import getApi from '../../api/getApi';
 import Banner from '../components/universal/banner';
 import Header from '../components/universal/header.js';
+import ItemServices from '../services/ItemServices'
 
 import {
 	db,
@@ -28,6 +29,7 @@ export default function Home() {
 	]);
 	const [allproduct,setAllProduct]=useState([]);
 	const [isLoading,setisLoading]=useState(true);
+	const [token, setToken] = useState('')
 	const [popcat,setpopCat]=useState([
 		{"id":0,"name":"All","icon":"building-o","colors":"#155C9E"},
 		{"id":6,"name":"Men's clothing","icon":"tshirt","colors":"#155C9E"},
@@ -57,7 +59,18 @@ export default function Home() {
 		}).catch(e=>setisLoading(false));
 	}
 
+	const getProducts = ()=>{
+		ItemServices.getAllItems(token)
+		.then(res=>{
+			console.log(products)
+		})
+		.catch(err=>{
+			console.log(err)
+		})
+	}
+
     useEffect(()=>{
+		const token = AsyncStorage.getItem("token")
         getProduct();
 		getAllProduct();
     },[])
