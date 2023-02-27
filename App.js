@@ -29,7 +29,7 @@ export default function App() {
   return (
     <SafeAreaView style={[s.fl1,Platform.OS === 'android' && s.mgtp30]}>
     <NavigationContainer theme={MyTheme}>
-    <Tab.Navigator screenOptions={{ headerShown:false }} initialRouteName="Profile">
+    <Tab.Navigator screenOptions={{ headerShown:false }} initialRouteName="Homes">
       {/* <Tab.Screen name="Homes" component={HomeScreen}  options={{
                 tabBarIcon: ({ color }) => (
                     <Icon name="home" color={color} size={20} />
@@ -69,7 +69,7 @@ export default function App() {
                 headerTitle:'Account'
             }}>
                 {(props)=>
-                AsyncStorage.getItem("token")!==null ? <AuthStacks {...props}/> :<AuthStacks {...props} />}
+                AsyncStorage.getItem("token")!==null ? <AuthStacks {...props}/> :<AccountStacks {...props} />}
             </Tab.Screen>
 }
     </Tab.Navigator>

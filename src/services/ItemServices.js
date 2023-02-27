@@ -5,19 +5,13 @@ import endpointNames from "../configs/serverUrls";
 const itemsUrl = endpointNames.item
 
 
-  const getAllItems = async (request) => {
-    const token = AsyncStorage.getItem('token')
-
-    const options = {
-        headers : {'Authorization': `Bearer ${token}`,
-            //   'Content-Type': 'application/x-www-form-urlencoded',
-        }
-    }
+  const getAllItems = async () => {
+    
     let response
-    await axios.get(itemsUrl, options)
+    await axios.get(itemsUrl)
     .then((r) => {
-        console.log("response ", r)
-        response = r;
+        // console.log("response ", r)
+        response = r.data;
     }).catch(err => {
         response = err;
     });
@@ -26,18 +20,12 @@ const itemsUrl = endpointNames.item
 };
 
 const getItemById = async id =>{
-    const token = AsyncStorage.getItem('token')
-
-    const options = {
-        headers : {'Authorization': `Bearer ${token}`,
-            //   'Content-Type': 'application/x-www-form-urlencoded',
-        }
-    }
+    
     let response
-    await axios.get(itemsUrl, id, options)
+    await axios.get(itemsUrl, id)
     .then((r) => {
-        console.log("response ", r)
-        response = r;
+        // console.log("response ", r.data)
+        response = r.data;
     }).catch(err => {
         response = err;
     });

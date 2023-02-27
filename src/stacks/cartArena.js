@@ -1,8 +1,8 @@
 import React from 'react'
 import {View,Text} from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Home from '../screens/Homescreen';
-import ProductDetails from './cart/ProductDetails';
+import Products from '../screens/ProdDetails';
+import ProductInfo from './cart/ProductInfo';
 import Checkout from './cart/Checkout';
 const Stack=createNativeStackNavigator();
 
@@ -22,10 +22,10 @@ const HomeStacks=({navigation,route})=>{
     return(
         <Stack.Navigator initialRouteName='Home'>
             <Stack.Screen name="Home">
-                {(props)=><Home {...props} hideTabBar={hideTabBar}/>}
+                {(props)=><Products {...props} hideTabBar={hideTabBar}/>}
             </Stack.Screen>
-            <Stack.Screen name="ProductDetails">
-                {(props)=><ProductDetails {...props} hideTabBar={hideTabBar}/>}
+            <Stack.Screen name="ProductInfo">
+                {(props)=><ProductInfo {...props} hideTabBar={hideTabBar}/>}
             </Stack.Screen>
             <Stack.Screen name="Checkout">
                 {(props)=><Checkout {...props} hideTabBar={hideTabBar}/> }
