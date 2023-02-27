@@ -6,6 +6,13 @@ import s from '../../../styles/mainStyle.js';
 const ProductMini=(props)=>{
     useEffect(()=>{
     },[])
+    
+
+    const handleShop = ()=>{
+        // AsyncStorage
+        // navigate('ProductDetails')
+    }
+
     return(
         <TouchableOpacity style={[{width:props.width || 'auto',minHeight:100,height:props.height || 'auto'},!props.vertical && {marginLeft:10,marginRight:10},props.productStyle]}>
             <View style={{flex:1}}>
@@ -21,7 +28,7 @@ const ProductMini=(props)=>{
                         {props.product.title.length > 20 ? props.product.title.substring(0,18)+'..' : props.product.title}
                     </Text>
                     <Text style={[s.f14,s.b,s.mgtp10]}>{props.product.subtitle || props.product.discount}</Text>
-                    <TouchableOpacity style={[btnStyle.btn,s.mgtp10]}>
+                    <TouchableOpacity onPress={handleShop} style={[btnStyle.btn,s.mgtp10]}>
                         <Text style={[s.f14,s.clfff]}>Shop Now</Text>
                     </TouchableOpacity>
             </View>

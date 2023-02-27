@@ -1,9 +1,10 @@
 import axios from "axios";
 import endpointNames from "../configs/serverUrls";
+// import {AsyncStorage} from '@react-native-async-storage/async-storage'
 
 const userUrl = endpointNames.user
 
-let token = JSON.parse(localStorage.getItem("token"))
+// let token = JSON.parse(AsyncStorage.getItem("token"))
 let headers
 
 //login function
@@ -83,24 +84,20 @@ const getCurrentUser = () => {
 
 
 
-const storeUser = (request) => {
+const storeUser = async (request) => {
 
     let response;
     console.log(request)
-    axios
-      .post(userUrl, request)
-      .then((response) => {
-        console.log(response);
+
+   await axios.post(userUrl, request)
+      .then((res) => {
+        // console.log(response);
+        response = res
       })
       .catch((error) => {
-        if (error.response) {
-          console.log(error.response);
-          console.log("server responded");
-        } else if (error.request) {
-          console.log("network error");
-        } else {
-          console.log(error);
-        }
+        response = error
+        //   console.log(error);
+        
       });
 
     return response;

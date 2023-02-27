@@ -1,5 +1,7 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, {useState} from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
+import UserServices from '../../services/UserServices';
 
 const SignUp =({navigation})=>{
 //   state={
@@ -15,7 +17,23 @@ const SignUp =({navigation})=>{
     };
 
     const handleSave = () =>{
-      console.log(email)
+      // console.log(email)
+      let data = {
+        "name": name,
+        "email": email,
+        "password": password
+      }
+      UserServices.storeUser(data)
+      .then(res=>{
+       console.log(res)
+      //  const data = res.data
+      //  AsyncStorage.setItem('name', data.name)
+      //  AsyncStorage.setItem('token', data.token)
+      //  navigation.navigate('Home')
+      })
+      .catch(err=>{
+        console.log(err)
+      })
     }
 
     return (

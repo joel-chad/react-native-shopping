@@ -9,6 +9,10 @@ import Saved from './src/screens/Saved';
 import Shop from './src/screens/Shop';
 import AccountStacks from './src/stacks/accountArena.js';
 import AuthStacks from './src/stacks/authArena';
+import HomeStacks from './src/stacks/cartArena';
+import { useState } from 'react';
+import { useEffect } from 'react/cjs/react.production.min';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Tab = createBottomTabNavigator();
 
@@ -21,14 +25,25 @@ const MyTheme = {
   };
 
 export default function App() {
+    
   return (
     <SafeAreaView style={[s.fl1,Platform.OS === 'android' && s.mgtp30]}>
     <NavigationContainer theme={MyTheme}>
     <Tab.Navigator screenOptions={{ headerShown:false }} initialRouteName="Profile">
-      <Tab.Screen name="Homes" component={HomeScreen}  options={{
+      {/* <Tab.Screen name="Homes" component={HomeScreen}  options={{
                 tabBarIcon: ({ color }) => (
                     <Icon name="home" color={color} size={20} />
-                )}} />
+                )}} /> */}
+        <Tab.Screen name="Homes"
+            options={{
+                tabBarIcon: ({ color }) => (
+                    <Icon name="home" color={color} size={20} />
+                ),
+                headerShown:false,
+                headerTitle:'Home'
+            }}>
+                {(props)=><HomeStacks {...props} />}
+            </Tab.Screen>
 
         <Tab.Screen name="Shop" component={Shop}
             options={{
@@ -44,7 +59,7 @@ export default function App() {
                 )
             }}
         />
-
+    {
         <Tab.Screen name="Profile"
             options={{
                 tabBarIcon: ({ color }) => (
@@ -53,9 +68,10 @@ export default function App() {
                 headerShown:false,
                 headerTitle:'Account'
             }}>
-                {(props)=><AuthStacks {...props} />}
+                {(props)=>
+                AsyncStorage.getItem("token")!==null ? <AuthStacks {...props}/> :<AuthStacks {...props} />}
             </Tab.Screen>
-
+}
     </Tab.Navigator>
     </NavigationContainer>
       <StatusBar style="auto" />

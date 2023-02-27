@@ -9,7 +9,8 @@ import Header from '../components/universal/header.js';
 import React from 'react';
 
 
-const Homescreen = () => {
+const Homescreen = ({navigation}) => {
+	// const navigate = useNavigation()
 
   const [product,setProduct]=useState([
 		{id:0,title:"Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops",image:'https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg',subtitle:'Visit site'},
@@ -68,7 +69,7 @@ const categorySearch=(data)=>{
 				tabVal={activeCat}
 				settabData={categorySearch}
 			/>
-			<Preview title="Flash Sale" products={product} />
+			<Preview title="Flash Sale" products={product}  />
 			<Banner width="100%" height={150} image='https://image.freepik.com/free-vector/mega-sale-offers-modern-promotional-banner_501916-61.jpg' />
 			<Preview title="Recently Viewed" products={product} />
 			</>
