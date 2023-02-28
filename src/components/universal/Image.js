@@ -3,17 +3,21 @@ import React, { useEffect, useState } from "react";
 import { widthToDp } from "rn-responsive-screen";
 
 export default function Images({ images }) {
-  const [activeImage, setActiveImage] = useState([]);
+  const [activeImage, setActiveImage] = useState(null);
 
+  const imageUri = uri =>{
+    return `https://runner-service.onrender.com/${uri.replace(/[\\]/g,'/')}`;
+ }
+ 
   useEffect(() => {
     // setActiveImage(images[0].url);
-    setActiveImage(images)
+    setActiveImage(images[0])
     console.log(activeImage)
   }, []);
 
   return (
     <View style={styles.imageContainer}>
-      <Image source={{ uri: activeImage }} style={styles.image} />
+      <Image source={{ uri:imageUri(activeImage) }} style={styles.image} />
       <View style={styles.previewContainer}>
         {images.map((image, index) => (
           <TouchableOpacity
@@ -23,7 +27,7 @@ export default function Images({ images }) {
             }}
           >
             <Image
-              source={{ uri: image }}
+              source={{ uri:imageUri(image)}}
               style={[
                 styles.imagePreview,
                 {

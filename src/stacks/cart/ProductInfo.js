@@ -1,19 +1,23 @@
-import { View, Text, ScrollView,TouchableOpacity, StyleSheet } from "react-native";
+import { View, Text, ScrollView,TouchableOpacity, StyleSheet, ActivityIndicator } from "react-native";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Images from "../../components/universal/Image";
 import ItemServices from '../../services/ItemServices'
 import MetaInfo from '../../components/universal/MetaInfo'
+import s from '../../../styles/mainStyle';
+
 
 export default function ProductInfo({ productId }) {
   const [productInfo, setproductInfo] = useState('');
+  const [isLoading,setisLoading]=useState(true);
   
     useEffect(() => {
       ItemServices.getItemById(productId)
       .then(res=>{
-        setproductInfo(res)
-        console.log(productInfo)
+        setproductInfo(res[0])
+        setisLoading(false)
+        console.log(productInfo.image)
       })
       .catch(err=>{
         console.log(err)
@@ -23,21 +27,19 @@ export default function ProductInfo({ productId }) {
 
   return (
     <SafeAreaView style={styles.container}>
-            {/* <TouchableOpacity onPress={() => Actions.pop()}>
-        <Ionicons
-          style={styles.icon}
-          name="arrow-back-outline"
-          size={24}
-          color="black"
-        />
-      </TouchableOpacity> */}
       <ScrollView>
-        {productInfo && (
-          <View>
-            <Images images={[productInfo.image]} />
-            <MetaInfo product={productInfo} />
+      {isLoading ?
+      <View style={[s.fl1,s.tocnt,s.mgtp20]}>
+				<ActivityIndicator size={'small'} />
+			</View>
+			:
+      <>
+        <View>
+          <Images images={[productInfo.image]} />
+          <MetaInfo product={productInfo} />
           </View>
-        )}
+        </>
+        }
       </ScrollView>
     </SafeAreaView>
   );
