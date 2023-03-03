@@ -27,7 +27,7 @@ const SignIn =({navigation})=>{
                 if (res.status === 200 || res.status === 201||res.status === 204) {
                     console.log(res)
                     // setLoading(false);
-                }
+                } 
       }).catch(err=>{
         console.log(err)
       })

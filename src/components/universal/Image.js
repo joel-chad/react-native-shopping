@@ -12,34 +12,34 @@ export default function Images({ images }) {
   useEffect(() => {
     // setActiveImage(images[0].url);
     setActiveImage(images[0])
-    console.log(activeImage)
+    // console.log(activeImage)
   }, []);
 
   return (
     <View style={styles.imageContainer}>
-      <Image source={{ uri:imageUri(activeImage) }} style={styles.image} />
-      <View style={styles.previewContainer}>
+      {/* <Image source={{ uri:imageUri(activeImage) }} style={styles.image} /> */}
+      {/* <View style={styles.previewContainer}>
         {images.map((image, index) => (
           <TouchableOpacity
             key={index}
             onPress={() => {
-            //   setActiveImage(image.url);
+              setActiveImage(image[index]);
             }}
           >
-            <Image
-              source={{ uri:imageUri(image)}}
+            {/* <Image
+              source={{ uri:imageUri(image.url)}}
               style={[
                 styles.imagePreview,
                 {
-                //   borderWidth: activeImage === image.url ? 3 : 0,
-                  borderWidth: activeImage === image ? 3 : 0,
+                  borderWidth: activeImage === image.url ? 3 : 0,
+                  // borderWidth: activeImage === image ? 3 : 0,
 
                 },
               ]}
-            />
-          </TouchableOpacity>
-        ))}
-      </View>
+            /> */}
+          {/* </TouchableOpacity> */}
+        {/* ))} */}
+      {/* </View>  */}
     </View>
   );
 }

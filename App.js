@@ -44,7 +44,7 @@ export default function App() {
             }}>
                 {(props)=><HomeStacks {...props} />}
             </Tab.Screen>
-
+ 
         <Tab.Screen name="Shop" component={Shop}
             options={{
                 tabBarIcon: ({ color }) => (

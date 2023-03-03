@@ -20,7 +20,7 @@ const HomeStacks=({navigation,route})=>{
         }
       };
     return(
-        <Stack.Navigator initialRouteName='Home'>
+        <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName='Home'>
             <Stack.Screen name="Home">
                 {(props)=><Products {...props} hideTabBar={hideTabBar}/>}
             </Stack.Screen>

@@ -8,18 +8,21 @@ import MetaInfo from '../../components/universal/MetaInfo'
 import s from '../../../styles/mainStyle';
 
 
-export default function ProductInfo({ productId }) {
+export default function ProductInfo({ route }) {
   const [productInfo, setproductInfo] = useState('');
   const [isLoading,setisLoading]=useState(true);
   
     useEffect(() => {
+      const { productId } = route.params;
+      // console.log(productId)
       ItemServices.getItemById(productId)
       .then(res=>{
-        setproductInfo(res[0])
+        setproductInfo(res)
         setisLoading(false)
-        console.log(productInfo.image)
+        // console.log(productInfo)
       })
       .catch(err=>{
+        setisLoading(false)
         console.log(err)
       })
     
@@ -35,7 +38,7 @@ export default function ProductInfo({ productId }) {
 			:
       <>
         <View>
-          <Images images={[productInfo.image]} />
+          <Images images={productInfo} />
           <MetaInfo product={productInfo} />
           </View>
         </>

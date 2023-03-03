@@ -18,17 +18,6 @@ const Products = ({navigation})=> {
 	const [isLoading,setisLoading]=useState(true);
 
 
-
-
-  // const getProduct=(url)=>{
-  //   getApi(`https://fakestoreapi.com/products/category/men's clothing?limit=5`,'GET')
-  //   .then(json=>{
-  //     setProduct(json)
-  //     setisLoading(false);
-  //     // console.log('sdfghjk')
-  //   }).catch(e=>setisLoading(false));
-  // }
-
   const getAllProducts=()=>{
     ItemServices.getAllItems()
     .then(result =>{
@@ -49,9 +38,9 @@ const Products = ({navigation})=> {
   },[])
 
   return (
-    
+    <ScrollView>
+       <Header/>
     <View style={styles.container}>
-      <Header/>
       <ScrollView>
       {isLoading ?
       <View style={[s.fl1,s.tocnt,s.mgtp20]}>
@@ -65,7 +54,7 @@ const Products = ({navigation})=> {
             <View style={styles.cardContainer} key={product._id}>
             <Image
               source={{
-                uri: imageUri(product.image),
+                uri: imageUri(product.image[0]),
               }}
               style={styles.image}
             />
@@ -81,7 +70,6 @@ const Products = ({navigation})=> {
                 onPress={() => {
                   /* 1. Navigate to the Details route with params */
                   navigation.navigate('ProductInfo', {
-                    // itemId: 86,
                     'productId': product._id
                   });
                 }
@@ -95,7 +83,7 @@ const Products = ({navigation})=> {
         }
       </ScrollView>
     </View>
-    
+    </ScrollView>
   );
   
 }
@@ -103,7 +91,7 @@ const Products = ({navigation})=> {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 50,
+    paddingTop: 20,
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",

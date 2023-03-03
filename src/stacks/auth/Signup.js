@@ -26,9 +26,6 @@ const SignUp =({navigation})=>{
       UserServices.storeUser(data)
       .then(res=>{
        console.log(res)
-      //  const data = res.data
-      //  AsyncStorage.setItem('name', data.name)
-      //  AsyncStorage.setItem('token', data.token)
       //  navigation.navigate('Home')
       })
       .catch(err=>{

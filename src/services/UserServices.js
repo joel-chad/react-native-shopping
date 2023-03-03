@@ -1,6 +1,6 @@
 import axios from "axios";
 import endpointNames from "../configs/serverUrls";
-// import {AsyncStorage} from '@react-native-async-storage/async-storage'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const userUrl = endpointNames.user
 
@@ -8,16 +8,14 @@ const userUrl = endpointNames.user
 let headers
 
 //login function
-const login = async (email, password) => {
+const login = async (data) => {
     let response
-    await axios.post(userUrl + '/login', {
-        'email': email,
-        'password': password
-    }).then((r) => {
-        console.log("response ", r)
-        response = r;
-        localStorage.setItem('user',JSON.stringify(r));
-    }).catch(err => {
+    await axios.post(userUrl + '/login', data).then((r) => {
+        console.log("response ", r.data.token)
+        response = r.data;
+        AsyncStorage.setItem('token', r.data.token)
+    })
+    .catch(err => {
         response = err;
     });
 

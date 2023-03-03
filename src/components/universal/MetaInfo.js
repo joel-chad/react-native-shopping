@@ -16,7 +16,7 @@ export default function MetaInfo({ product }) {
           <Text style={styles.star}>⭐⭐⭐</Text>
         </View>
       </View>
-      <Text style={styles.heading}>Available Sizes</Text>
+      {/* <Text style={styles.heading}>Available Sizes</Text> */}
       {/* <View style={styles.row}>
         {product.options[0].values.map((size, index) => (
           <Text
