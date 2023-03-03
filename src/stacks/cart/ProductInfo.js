@@ -38,7 +38,7 @@ export default function ProductInfo({ route }) {
 			:
       <>
         <View>
-          <Images images={productInfo} />
+          <Images images={productInfo.image} />
           <MetaInfo product={productInfo} />
           </View>
         </>

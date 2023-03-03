@@ -3,21 +3,22 @@ import React, { useEffect, useState } from "react";
 import { widthToDp } from "rn-responsive-screen";
 
 export default function Images({ images }) {
-  const [activeImage, setActiveImage] = useState(null);
+  const [activeImage, setActiveImage] = useState('');
 
   const imageUri = uri =>{
-    return `https://runner-service.onrender.com/${uri.replace(/[\\]/g,'/')}`;
+    return `https://runner-service.onrender.com/${uri.replace(/[\/\\]/g,'/')}`;
  }
  
   useEffect(() => {
-    // setActiveImage(images[0].url);
+    // console.log(images)
     setActiveImage(images[0])
-    // console.log(activeImage)
+    // console.log(images[0])
+    console.log(activeImage)
   }, []);
 
   return (
     <View style={styles.imageContainer}>
-      {/* <Image source={{ uri:imageUri(activeImage) }} style={styles.image} /> */}
+      <Image source={{ uri:imageUri(activeImage) }} style={styles.image} />
       {/* <View style={styles.previewContainer}>
         {images.map((image, index) => (
           <TouchableOpacity
@@ -57,7 +58,7 @@ const styles = StyleSheet.create({
   },
   imageContainer: {
     backgroundColor: "#F7F6FB",
-    paddingBottom: widthToDp(10),
+    // paddingBottom: widthToDp(10),
   },
   imagePreview: {
     width: widthToDp(15),
