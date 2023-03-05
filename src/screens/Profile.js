@@ -4,6 +4,7 @@ import Icon from '@expo/vector-icons/Ionicons';
 import s from '../../styles/mainStyle';
 import { useState } from "react/cjs/react.development";
 const {width,height}=Dimensions.get('window');
+import UserServices from "../services/UserServices";
 
 const TopContent=()=>{
     return(
@@ -40,7 +41,7 @@ export default function Profile(props){
     const [menu,setMenu]=useState([
         {id:0,name:'Edit Profile',slug:'EditProfile',icon:'person-circle-outline'},
         {id:1,name:'Track Order',slug:'TrackOrder',icon:'location-outline'},
-        {id:2,name:'Wish List',slug:'wishlist',icon:'cart-outline'},
+        // {id:2,name:'Wish List',slug:'wishlist',icon:'cart-outline'},
     ])
 
     const actionHandler=(data)=>{

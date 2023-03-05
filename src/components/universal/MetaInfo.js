@@ -1,12 +1,15 @@
 import { View, Text, StyleSheet } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import CartServices from '../../services/CartServices'
 import { height, heightToDp, widthToDp } from "rn-responsive-screen";
 import NumericInput from 'react-native-numeric-input'
+import context from "../../context/context";
 
 export default function MetaInfo({ product }) {
   const [activeSize, setActiveSize] = useState(0);
   const [quantity, setQuantity] = useState(1)
+  const [items, setItems] = useState([])
+  const CartContext = useContext(context)
 
   const handlePress = () =>{
     let data = {
@@ -16,7 +19,13 @@ export default function MetaInfo({ product }) {
     console.log(data)
     CartServices.addToCart(data)
     .then(res=>{
-        console.log(res)
+        // console.log(res.items)
+      setItems(res.items)
+      items.forEach(item=>{
+        CartContext.addNewItem(item)
+      },
+      console.log(CartContext.items)
+      )
     }).catch(err=>{
       console.log(err)
     })

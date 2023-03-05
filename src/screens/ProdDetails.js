@@ -1,16 +1,10 @@
 import { ScrollView, StyleSheet,TouchableOpacity, View, Text, Image, ActivityIndicator } from "react-native";
 import React, { useEffect, useState } from "react";
-import ProductCard from "../components/universal/ProductCard";
 import { widthToDp, heightToDp } from "rn-responsive-screen";
-import axios from "axios";
 import s from '../../styles/mainStyle';
-
-import getApi from '../../api/getApi';
 import Header from "../components/universal/header";
-// import { Actions } from "react-native-router-flux";
 import Button from "../components/universal/Button";
 import ItemServices from "../services/ItemServices";
-// import baseURL from "../constants/url";
 
 const Products = ({navigation})=> {
   const [products, setProduct] = useState([]);
