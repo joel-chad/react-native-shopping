@@ -16,7 +16,7 @@ import { widthToDp, heightToDp } from "rn-responsive-screen";
 import Context from '../context/context';
 
 
-class Saved extends PureComponent {
+class Saved extends React.Component {
   static contextType = Context;
 
   constructor(props){
