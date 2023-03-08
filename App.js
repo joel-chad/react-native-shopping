@@ -3,7 +3,7 @@ import { StyleSheet, SafeAreaView, Text, View } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import Icon from '@expo/vector-icons/Ionicons'
-import Saved from './src/screens/Saved';
+import Saved from './src/screens/Cart';
 import Shop from './src/screens/Shop';
 import AccountStacks from './src/stacks/accountArena.js';
 import AuthStacks from './src/stacks/authArena';

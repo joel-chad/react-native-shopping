@@ -4,11 +4,11 @@ import context from '../context/context'
 import AccountStacks from './accountArena'
 import AuthStacks from './accountArena'
 
-const Auth = () => {
+const Auth = (props) => {
     const CartContext = useContext(context)
   return (
     <>
-      {CartContext.signedIn ? <AccountStacks/> : <AuthStacks/>}
+      {CartContext.signedIn ? <AccountStacks {...props}/> : <AuthStacks {...props}/>}
     </>
   )
 }

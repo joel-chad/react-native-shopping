@@ -1,12 +1,14 @@
 import React, { PureComponent } from 'react';
 import {
   StatusBar,
+  Alert,
   StyleSheet,
   SafeAreaView,
   Text,
   View,
   TouchableOpacity,
-  FlatList
+  FlatList,
+  ActivityIndicator
 } from 'react-native';
 import { ListItem, Avatar } from 'react-native-elements';
 import CartServices from '../services/CartServices';
@@ -14,6 +16,7 @@ import Icon from 'react-native-vector-icons/Ionicons'
 import Button from '../components/universal/Button';
 import { widthToDp, heightToDp } from "rn-responsive-screen";
 import Context from '../context/context';
+import OrderServices from '../services/OrderServices';
 
 
 class Saved extends React.Component {
@@ -23,7 +26,8 @@ class Saved extends React.Component {
     super(props);
     this.state = {
       data: [],
-      bill: ''
+      bill: '',
+      isLoading: false
     }
   }
      getSavedProducts=()=>{
@@ -42,9 +46,26 @@ class Saved extends React.Component {
             })
     }
 
-    // useEffect(()=>{
-    //     getSavedProducts();
-    // },[]);
+    handleCheckout = () =>{
+      this.setState({isLoading: true})
+      OrderServices.checkout()
+      .then(res=>{
+        console.log(res)
+        this.setState({isLoading: false})
+        Alert.alert('Alert Title', `Checkout Done. You will pay ${res.order.bill}.\n Please check
+        delivery details in the Orders tab on your profile` , [
+          {
+            text: 'Done',
+            style: 'cancel',
+          }
+        ])
+      })
+      .catch(err=>{
+        this.setState({isLoading: false})
+        console.log(err)
+        isLoading
+      })
+    }
   
     renderCats = ({item}) => (
       <View style={{marginTop: 0}}>
@@ -65,11 +86,20 @@ class Saved extends React.Component {
     }
   
     render(){
-      return(
+        return(
+        
         <SafeAreaView style={{ flex: 1}}>
+          {
+          this.state.isLoading ?
+          <View style={styles.activity}>
+            <ActivityIndicator size={'small'} />
+          </View>
+          :
+          <>
           <View style={styles.checkout}>
             <Button style={styles.button}
-                  title="Checkout"     
+                  title="Checkout" 
+                  onPress={this.handleCheckout}    
             />          
             </View>
 
@@ -81,11 +111,12 @@ class Saved extends React.Component {
           <View style={styles.bill}>
           <Text style={styles.total}>Total: {this.state.bill}</Text>
           </View>
+          </>
+          }
       </SafeAreaView>
-      
         )
+      }
     }
-  }
 
   const styles = StyleSheet.create({
     total: {
@@ -107,6 +138,10 @@ class Saved extends React.Component {
     button: {
       width: widthToDp(25),
       height: heightToDp(10)
+    },
+    activity: {
+      flex: 1,
+      justifyContent: 'center'
     }
   })
   
