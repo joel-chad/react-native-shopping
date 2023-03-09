@@ -30,7 +30,7 @@ const checkout = async (request) => {
 };
 
 const getOrderDetails = async (request) => {
-    const token = AsyncStorage.getItem('token')
+    // const token = AsyncStorage.getItem('token')
 
     const options = {
         headers : {'Authorization': `Bearer ${token}`,
@@ -40,8 +40,8 @@ const getOrderDetails = async (request) => {
     let response
     await axios.get(ordersUrl, options)
     .then((r) => {
-        console.log("response ", r)
-        response = r;
+        console.log("response ", r.data)
+        response = r.data;
     }).catch(err => {
         response = err;
     });

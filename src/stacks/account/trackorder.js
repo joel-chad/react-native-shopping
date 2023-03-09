@@ -1,9 +1,22 @@
-import react, { useLayoutEffect } from "react";
+import react, { useLayoutEffect, useState } from "react";
 import {View,Text, ScrollView} from 'react-native'
 import Icon from "@expo/vector-icons/Ionicons"
 import s from '../../../styles/mainStyle'
 import { useEffect } from "react/cjs/react.development";
+import OrderServices from "../../services/OrderServices";
+
 export default function TrackOrder(props){
+    const [orders, setOrders] = useState([])
+    const getOrders = ()=>{
+        OrderServices.getOrderDetails()
+        .then(res=>{
+            console.log(res)
+            setOrders(res)
+        })
+    }
+    useEffect(()=>{
+        getOrders()
+    })
     useLayoutEffect(()=>{
         props.hideTabBar(true)
         return () => {
