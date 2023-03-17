@@ -186,13 +186,18 @@ const getUserById = async (id) => {
 }
 
 //sign up
-const register = async (data) => {
+const addAddress = async (id, data) => {
+    const options = {
+        headers : {'Authorization': `Bearer ${token}`,
+            //   'Content-Type': 'application/x-www-form-urlencoded',
+          }
+      }
     let response;
 
-    await axios.post(userUrl + '/registration', data)
+    await axios.post(userUrl + `/address/${id}`, data, options)
         .then(res => {
             console.log(res);
-            response = res;
+            response = res.data;
         })
         .catch(err => {
             console.log(err);
@@ -236,6 +241,6 @@ const deactivate = async (id)=>{
 
 export default {
     login, changePassword, resetPassword, logout, getCurrentUser, activate, deactivate,
-    storeUser, savePassword, getAllUsers, getAllRoles, editUser, getUserById, register
+    storeUser, savePassword, getAllUsers, getAllRoles, editUser, getUserById, register, addAddress
 
 }
