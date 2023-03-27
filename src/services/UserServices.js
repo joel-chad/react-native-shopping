@@ -241,6 +241,6 @@ const deactivate = async (id)=>{
 
 export default {
     login, changePassword, resetPassword, logout, getCurrentUser, activate, deactivate,
-    storeUser, savePassword, getAllUsers, getAllRoles, editUser, getUserById, register, addAddress
+    storeUser, savePassword, getAllUsers, getAllRoles, editUser, getUserById, addAddress
 
 }

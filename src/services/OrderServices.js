@@ -40,7 +40,7 @@ const getOrderDetails = async (request) => {
     let response
     await axios.get(ordersUrl, options)
     .then((r) => {
-        console.log("response ", r.data)
+        // console.log("response ", r.data)
         response = r.data;
     }).catch(err => {
         response = err;
