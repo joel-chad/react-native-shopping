@@ -11,6 +11,7 @@ const SignUp =({navigation})=>{
     const [email, setEmail] = useState('')
     const [password, setPassword] =useState('')
     const [name, setName]= useState('')
+    const [address, setAddress]= useState('')
 
     const handlePress = () => {
       navigation.navigate('SignIn');
@@ -21,7 +22,8 @@ const SignUp =({navigation})=>{
       let data = {
         "name": name,
         "email": email,
-        "password": password
+        "password": password,
+        'address': address
       }
       UserServices.storeUser(data)
       .then(res=>{
@@ -49,6 +51,13 @@ const SignUp =({navigation})=>{
             placeholder="Email..." 
             placeholderTextColor="#003f5c"
             onChangeText={text => setEmail(text)}/>
+        </View>
+        <View style={styles.inputView} >
+          <TextInput  
+            style={styles.inputText}
+            placeholder="Address..." 
+            placeholderTextColor="#003f5c"
+            onChangeText={text => setAddress(text)}/>
         </View>
         <View style={styles.inputView} >
           <TextInput  

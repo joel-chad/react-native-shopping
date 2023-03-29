@@ -10,10 +10,11 @@ const OrderDetails = (props) =>{
                 props.orders.map((order)=>{
                     if(order.status == "IN PROCESSING"){
                         return(
-                            <>
+                            
+                            <View key={order._id}>
                             <Text>Your Order worth<Text>{order.price}</Text> is being processed. We will notify 
                             you with further details within the next few hours</Text>
-                            </>
+                            </View>
                         )}
                     if(order.status == "IN TRANSIT"){
                         return(
