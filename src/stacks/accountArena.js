@@ -4,6 +4,8 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Profile from '../screens/Profile';
 import EditProfile from './account/editprofile';
 import TrackOrder from './account/trackorder';
+import Order from './account/order'
+
 const Stack=createNativeStackNavigator();
 
 
@@ -29,6 +31,9 @@ const AccountStacks=({navigation,route})=>{
             </Stack.Screen>
             <Stack.Screen name="EditProfile">
                 {(props)=><EditProfile {...props} hideTabBar={hideTabBar}/> }
+            </Stack.Screen>
+            <Stack.Screen name="Order">
+                {(props)=><Order {...props} hideTabBar={hideTabBar}/> }
             </Stack.Screen>
         </Stack.Navigator>
     )
