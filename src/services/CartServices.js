@@ -16,7 +16,7 @@ const addToCart = async (request) => {
     let response
     await axios.post(cartUrl, request, options)
     .then((r) => {
-        console.log("response ", r.data)
+        // console.log("response ", r.data)
         response = r.data;
     }).catch(err => {
         response = err;

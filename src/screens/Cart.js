@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import {
   StatusBar,
   Alert,
@@ -19,39 +19,35 @@ import Context from '../context/context';
 import OrderServices from '../services/OrderServices';
 
 
-class Saved extends React.Component {
-  static contextType = Context;
+export default function Cart() {
+  const context = useContext(Context)
+  const [data, setData] = useState([])
+  const [bill, setBill] = useState('')
+  const [isLoading, setLoading] = useState(false)
 
-  constructor(props){
-    super(props);
-    this.state = {
-      data: [],
-      bill: '',
-      isLoading: false
-    }
-  }
-     getSavedProducts=()=>{
+     const getSavedProducts=()=>{
         CartServices.getCartItems()
             .then(res=>{
                 // setSaved(res)
-                this.setState({data: res.items})
-                this.setState({bill: res.bill})
-                this.state.data.forEach(item=>{
-                  this.context.addNewItem(item)
+                setBill(res.bill)
+                setData(res.items)
+                data.forEach(item=>{
+                  console.log(item)
+                  context.addNewItem(item)
                 })
-                            
+                         
               })
             .catch(err=>{
                 console.log(err)
             })
     }
 
-    handleCheckout = () =>{
-      this.setState({isLoading: true})
+    const handleCheckout = () =>{
+      setLoading(true)
       OrderServices.checkout()
       .then(res=>{
         console.log(res)
-        this.setState({isLoading: false})
+        setLoading(false)
         Alert.alert('Alert Title', `Checkout Done. You will pay ${res.order.bill}.\n Please check
         delivery details in the Orders tab on your profile` , [
           {
@@ -61,18 +57,18 @@ class Saved extends React.Component {
         ])
       })
       .catch(err=>{
-        this.setState({isLoading: false})
+        setLoading(false)
         console.log(err)
         isLoading
       })
     }
   
-    renderCats = ({item}) => (
-      <View style={{marginTop: 0}}>
+    const renderCats = ({item}) => (
+      <View style={{marginTop: 0, marginLeft: 8}}>
       <ListItem bottomDivider>
-      <Avatar rounded large source={{uri: 'https://cdn-prod.medicalnewstoday.com/content/images/articles/322/322868/golden-retriever-puppy.jpg'}} height={36} width={36} />
+      {/* <Avatar rounded large source={{uri: 'https://cdn-prod.medicalnewstoday.com/content/images/articles/322/322868/golden-retriever-puppy.jpg'}} height={36} width={36} /> */}
        <ListItem.Content>
-         <ListItem.Title style={{color:'black', fontSize: 18}}>{item.name}</ListItem.Title>
+         {/* <ListItem.Title style={{color:'black', fontSize: 18}}>{item.name}</ListItem.Title> */}
          <ListItem.Subtitle style={{color: 'black'}}>{`$${item.price}`}</ListItem.Subtitle>
          <ListItem.Subtitle style={{color: 'black'}}>{`${item.quantity} units`}</ListItem.Subtitle>
        </ListItem.Content>
@@ -81,16 +77,23 @@ class Saved extends React.Component {
     );
   
   
-    componentDidMount(){
-      this.getSavedProducts()
-    }
+    useEffect(()=>{
+      getSavedProducts()
+      data.forEach(item=>{
+        // console.log(item)
+        context.addNewItem(item)
+      })
+    }, [])
   
-    render(){
         return(
-        
+        data == undefined || data == [] ?
+        <View style={styles.blank}>
+          <Text>There are currently no items in the cart</Text>
+        </View>
+        :
         <SafeAreaView style={{ flex: 1}}>
           {
-          this.state.isLoading ?
+          isLoading ?
           <View style={styles.activity}>
             <ActivityIndicator size={'small'} />
           </View>
@@ -99,24 +102,24 @@ class Saved extends React.Component {
           <View style={styles.checkout}>
             <Button style={styles.button}
                   title="Checkout" 
-                  onPress={this.handleCheckout}    
+                  onPress={handleCheckout}    
             />          
             </View>
 
           <FlatList
             removeClippedSubviews={true}
-            data={this.context.items} 
-            renderItem={item => this.renderCats(item)}
+            data={context.items} 
+            renderItem={item => renderCats(item)}
           />
           <View style={styles.bill}>
-          <Text style={styles.total}>Total: {this.state.bill}</Text>
+          <Text style={styles.total}>Total: {bill}</Text>
           </View>
           </>
           }
       </SafeAreaView>
         )
       }
-    }
+    
 
   const styles = StyleSheet.create({
     total: {
@@ -142,7 +145,11 @@ class Saved extends React.Component {
     activity: {
       flex: 1,
       justifyContent: 'center'
+    },
+    blank:{
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center'
     }
   })
   
-  export default Saved;

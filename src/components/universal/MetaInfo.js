@@ -16,16 +16,16 @@ export default function MetaInfo({ product }) {
       itemId: product._id,
       quantity: quantity
     }
-    console.log(data)
+    // console.log(data)
     CartServices.addToCart(data)
     .then(res=>{
         // console.log(res.items)
       setItems(res.items)
-      items.forEach(item=>{
-        CartContext.addNewItem(item)
-      },
-      console.log(CartContext.items)
-      )
+      console.log(items[items.length-1])
+      // items.forEach(item=>{
+        CartContext.addNewItem(items[items.length-1])
+      // }      
+      // )
     }).catch(err=>{
       console.log(err)
     })
