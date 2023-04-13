@@ -33,6 +33,19 @@ const getItemById = async id =>{
     return response;
 }
 
+const searchItems = async searchQuery=>{
+    let response;
+    await axios.get(itemsUrl + '/' + searchQuery)
+    .then((r) => {
+        // console.log("response ", r.data)
+        response = r.data;
+    }).catch(err => {
+        response = err;
+    });
+
+    return response;
+}
+
 export default {
-    getAllItems, getItemById
+    getAllItems, getItemById, searchItems
 }

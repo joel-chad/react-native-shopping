@@ -45,10 +45,10 @@ export default function App() {
                 {(props)=><HomeStacks {...props} />}
             </Tab.Screen>
  
-        <Tab.Screen name="Shop" component={Shop}
+        <Tab.Screen name="Search" component={Shop}
             options={{
                 tabBarIcon: ({ color }) => (
-                    <Icon name="grid-outline" color={color} size={20} />
+                    <Icon name="search-outline" color={color} size={20} />
                 )
             }}
         />
