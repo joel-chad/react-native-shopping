@@ -8,7 +8,7 @@ import {
 } from "react-native";
 
 // definition of the Item, which will be rendered in the FlatList
-const Item = ({ name, description }) => (
+const Item = ( name, description ) => (
   <View  style={styles.item}>
     <Text style={styles.title}>{name}</Text>
     <Text style={styles.details}>{description}</Text>
@@ -18,8 +18,9 @@ const Item = ({ name, description }) => (
 // the filter
 const List = (props) => {
     
-  const renderItem = ({ item }) => {
+  const renderItem = ( item ) => {
     // when no input, show all
+    
     if (props.searchPhrase === "") {
       return <Item name={item.name} description={item.description} />;
     }
@@ -42,7 +43,7 @@ const List = (props) => {
       >
         <FlatList
           data={props.data}
-          renderItem={renderItem}
+          renderItem={item =>renderItem(item)}
           keyExtractor={(item) => item._id}
         />
       </View>
