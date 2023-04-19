@@ -84,7 +84,7 @@ export default function Cart() {
     }, [])
   
         return(
-        data == undefined || data == [] ?
+        context.items == undefined || context.items == [] || context.items.length==0 ?
         <View style={styles.blank}>
           <Text>There are currently no items in the cart</Text>
         </View>
