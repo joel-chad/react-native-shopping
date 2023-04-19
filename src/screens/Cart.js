@@ -28,13 +28,11 @@ export default function Cart() {
      const getSavedProducts=()=>{
         CartServices.getCartItems()
             .then(res=>{
-                // setSaved(res)
                 setBill(res.bill)
-                setData(res.items)
-                data.forEach(item=>{
-                  console.log(item)
-                  context.addNewItem(item)
-                })
+                // setData(res.items)
+                // data.forEach(item=>{
+                //   context.addNewItem(item)
+                // })
                          
               })
             .catch(err=>{
@@ -62,13 +60,14 @@ export default function Cart() {
         isLoading
       })
     }
+
   
     const renderCats = ({item}) => (
       <View style={{marginTop: 0, marginLeft: 8}}>
       <ListItem bottomDivider>
       {/* <Avatar rounded large source={{uri: 'https://cdn-prod.medicalnewstoday.com/content/images/articles/322/322868/golden-retriever-puppy.jpg'}} height={36} width={36} /> */}
        <ListItem.Content>
-         {/* <ListItem.Title style={{color:'black', fontSize: 18}}>{item.name}</ListItem.Title> */}
+         <ListItem.Title style={{color:'black', fontSize: 18}}>{item.name}</ListItem.Title>
          <ListItem.Subtitle style={{color: 'black'}}>{`$${item.price}`}</ListItem.Subtitle>
          <ListItem.Subtitle style={{color: 'black'}}>{`${item.quantity} units`}</ListItem.Subtitle>
        </ListItem.Content>
@@ -79,10 +78,7 @@ export default function Cart() {
   
     useEffect(()=>{
       getSavedProducts()
-      data.forEach(item=>{
-        // console.log(item)
-        context.addNewItem(item)
-      })
+      // console.log(context.items)
     }, [])
   
         return(

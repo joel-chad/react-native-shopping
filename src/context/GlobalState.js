@@ -1,14 +1,30 @@
 import React from 'react';
 import Context from './context';
+import CartServices from '../services/CartServices';
 export default class CartContext extends React.Component{
 state = {
   items: [],
-  signedIn: false
+  // signedIn: false
 }
  
-addNewItem = (item) => {
-  const list = [...this.state.items, item];
-  this.setState({items: list});
+componentDidMount(){
+  CartServices.getCartItems()
+    .then(res=>{
+      this.setState({items : res.items})           
+      })
+    .catch(err=>{
+      console.log(err)
+    })
+}
+
+addNewItem = () => {
+  CartServices.getCartItems()
+    .then(res=>{
+      this.setState({items : res.items})           
+      })
+    .catch(err=>{
+      console.log(err)
+    })
 };
  
 deleteItem = (itemId) => {
@@ -18,7 +34,7 @@ render(){
  return (
   <Context.Provider 
    value={{
-    signedIn: this.state.signedIn,
+    // signedIn: this.state.signedIn,
     items: this.state.items,
     addNewItem: this.addNewItem,
     deleteItem: this.deleteItem
