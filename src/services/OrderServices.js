@@ -20,7 +20,7 @@ const checkout = async (request) => {
     let response
     await axios.post(orderUrl + '/checkout', request, options)
     .then((r) => {
-        console.log("response ", r)
+        console.log("response ", r.data)
         response = r.data;
     }).catch(err => {
         response = err;

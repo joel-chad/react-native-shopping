@@ -26,10 +26,20 @@ addNewItem = () => {
       console.log(err)
     })
 };
- 
-deleteItem = (itemId) => {
-  this.setState(this.state.items.splice(itemId,1));
+
+deleteItem = () => {
+  CartServices.getCartItems()
+    .then(res=>{
+      this.setState({items : res.items})           
+      })
+    .catch(err=>{
+      console.log(err)
+    })
 };
+ 
+// deleteItem = (itemId) => {
+//   this.setState(this.state.items.splice(itemId,1));
+// };
 render(){
  return (
   <Context.Provider 

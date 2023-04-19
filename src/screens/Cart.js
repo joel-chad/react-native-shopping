@@ -45,6 +45,8 @@ export default function Cart() {
       OrderServices.checkout()
       .then(res=>{
         console.log(res)
+        context.deleteItem()
+        setBill(0)
         setLoading(false)
         Alert.alert('Alert Title', `Checkout Done. You will pay ${res.order.bill}.\n Please check
         delivery details in the Orders tab on your profile` , [
