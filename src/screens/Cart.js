@@ -67,12 +67,14 @@ export default function Cart() {
     const renderCats = ({item}) => (
       <View style={{marginTop: 0, marginLeft: 8}}>
       <ListItem bottomDivider>
+        <TouchableOpacity>
       {/* <Avatar rounded large source={{uri: 'https://cdn-prod.medicalnewstoday.com/content/images/articles/322/322868/golden-retriever-puppy.jpg'}} height={36} width={36} /> */}
        <ListItem.Content>
          <ListItem.Title style={{color:'black', fontSize: 18}}>{item.name}</ListItem.Title>
          <ListItem.Subtitle style={{color: 'black'}}>{`$${item.price}`}</ListItem.Subtitle>
          <ListItem.Subtitle style={{color: 'black'}}>{`${item.quantity} units`}</ListItem.Subtitle>
        </ListItem.Content>
+       </TouchableOpacity>
      </ListItem>
       </View>
     );
