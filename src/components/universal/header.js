@@ -2,10 +2,47 @@ import React from "react";
 import {Dimensions,View,Text,TextInput} from 'react-native'
 import Icon from '@expo/vector-icons/Ionicons'
 import s from '../../../styles/mainStyle';
+import { useState } from "react";
+import ItemServices from "../../services/ItemServices";
 
 const {width,height}=Dimensions.get('window');
 
 export default function Header(props){
+	// const [searchPhrase, setSearchPhrase] = useState('')
+	// const [data, setData] = useState();
+
+	const search = text =>{
+		
+		console.log(text)
+		props.setSearchPhrase(text)
+		if(text.length>1){
+			props.getData(text)
+		}
+	}
+
+	// const renderData = ({item}) => (
+	// 	<ListItem bottomDivider>
+	// 	 <ListItem.Content>
+	// 	   <ListItem.Title style={{color:'black', fontSize: 18}}>{item.name}</ListItem.Title>
+	// 	   <ListItem.Subtitle style={{color: 'black'}}>{`Order Number: ${item.description}`}</ListItem.Subtitle>
+	// 	   <ListItem.Subtitle style={{color: 'black'}}>{`$${item.price}`}</ListItem.Subtitle>
+	// 	 </ListItem.Content>
+	//    </ListItem>
+	//   );
+	  
+	//   const getData = async () => {
+	// 	console.log(searchPhrase)
+	// 	ItemServices.searchItems(searchPhrase)
+	// 	.then(res=>{
+	// 		props.setData(res)
+	// 		console.log(res)
+	// 	})
+	// 	.catch(err=>{
+	// 		console.log(err)
+	// 	})
+	  
+	//   };
+
     return(
         <View style={[s.row,s.rowflStart,s.pdlt10,s.mgbt20,s.pdtp10,s.pdbt10]}>
 			<View style={[{width:width/1.2,backgroundColor:'#FFF',borderWidth:1,borderColor:"#d4d4d4",borderRadius:14,height:40}]}>
@@ -16,6 +53,8 @@ export default function Header(props){
 					<TextInput 
 						placeholder='Search for products'
 						style={[s.fl1,s.pdlt10,s.f14]}
+						value={props.searchPhrase}
+						onChangeText={text=>search(text)}
 					/>
 				</View>
 			</View>

@@ -3,7 +3,7 @@ import {View,Text} from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Auth from '../screens/Auth';
 import SignIn from './auth/SignIn';
-import SIgnUp from './auth/Signup';
+import SignUp from './auth/Signup';
 const Stack=createNativeStackNavigator();
 
 
@@ -21,15 +21,16 @@ const AuthStacks=({navigation,route})=>{
       };
     return(
         <Stack.Navigator initialRouteName='Auth'>
-            <Stack.Screen name="Auth">
+            {/* <Stack.Screen name="Auth">
                 {(props)=><Auth {...props} hideTabBar={hideTabBar}/>}
+            </Stack.Screen> */}
+            <Stack.Screen name="SignIn">
+                {(props)=><SignIn {...props} isSignedIn={isSignedIn} setSignedIn={setSignedIn} hideTabBar={hideTabBar}/> }
             </Stack.Screen>
             <Stack.Screen name="SignUp">
-                {(props)=><SIgnUp {...props} hideTabBar={hideTabBar}/>}
+                {(props)=><SignUp {...props} hideTabBar={hideTabBar}/>}
             </Stack.Screen>
-            <Stack.Screen name="SignIn">
-                {(props)=><SignIn {...props} hideTabBar={hideTabBar}/> }
-            </Stack.Screen>
+            
         </Stack.Navigator>
     )
 }

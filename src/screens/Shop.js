@@ -1,76 +1,43 @@
 // Home.js
 import React, { useState, useEffect } from "react";
-import {
-  StyleSheet,
-  Text,
-  SafeAreaView,
-  ActivityIndicator,
-  View, TextInput,
-  Keyboard, Button,  FlatList
-} from "react-native";
-import { Feather, Entypo } from "@expo/vector-icons";
+import {Dimensions,View,Text,TextInput, SafeAreaView, FlatList, StyleSheet} from 'react-native'
+import Icon from '@expo/vector-icons/Ionicons'
 import { ListItem, Avatar } from 'react-native-elements';
+import s from '../../styles/mainStyle';
+const {width,height}=Dimensions.get('window');
 
-import List from "../components/universal/List";
-// import SearchBar from "../components/universal/SearchBar";
+
 import ItemServices from "../services/ItemServices";
+import Header from "../components/universal/header";
+import { TouchableOpacity } from "react-native";
 
 
 
-const Home = () => {
+const Home = ({navigation}) => {
   const [searchPhrase, setSearchPhrase] = useState("");
   const [clicked, setClicked] = useState(false);
-  const [fakeData, setFakeData] = useState();
+  const [data, setData] = useState();
 
-  const SearchBar = () => {
-    return (
-      <View style={styles.container}>
-        <View
-          style={
-            !clicked
-              ? styles.searchBar__unclicked
-              : styles.searchBar__clicked
-          }
-        >
-          <Feather
-            name="search"
-            size={20}
-            color="#d9dbda"
-            style={{ marginLeft: 1 }}
-          />
-          <TextInput
-            style={styles.input}
-            placeholder="Search.."
-            value={searchPhrase}
-            onChange={getData}
-            onChangeText={text=>setSearchPhrase(text)}
-            onFocus={() => {
-              setClicked(true);
-            }}
-          />
-          
-          {clicked && (
-            <Entypo name="cross" size={20} color="#d9dbda" style={{ padding: 1 }} onPress={() => {
-                setSearchPhrase("")
-            }}/>
-          )}
-        </View>
-        {clicked && (
-          <View>
-            <Button
-              title="Cancel"
-              onPress={() => {
-                Keyboard.dismiss();
-                setClicked(false);
-              }}
-            ></Button>
-          </View>
-        )}
-      </View>
-    );
-  };
+
+  
+	const search = text =>{
+		
+		console.log(text)
+		setSearchPhrase(text)
+		if(text.length>1){
+			getData(text)
+		}
+	}
 
   const renderData = ({item}) => (
+    <TouchableOpacity onPress={() => {
+      /* 1. Navigate to the Details route with params */
+      navigation.navigate('ProductInfo', {
+        'productId': item._id,
+        screen: 'SearchResult',
+      });
+    }
+  }>
     <ListItem bottomDivider>
      <ListItem.Content>
        <ListItem.Title style={{color:'black', fontSize: 18}}>{item.name}</ListItem.Title>
@@ -78,43 +45,42 @@ const Home = () => {
        <ListItem.Subtitle style={{color: 'black'}}>{`$${item.price}`}</ListItem.Subtitle>
      </ListItem.Content>
    </ListItem>
+   </TouchableOpacity>
   );
   
   const getData = async () => {
-    console.log(searchPhrase)
-    ItemServices.searchItems(searchPhrase)
-    .then(res=>{
-        setFakeData(res)
-        console.log(res)
-    })
-    .catch(err=>{
-        console.log(err)
-    })
-  
-  };
+		console.log(searchPhrase)
+		ItemServices.searchItems(searchPhrase)
+		.then(res=>{
+			setData(res)
+			console.log(res)
+		})
+		.catch(err=>{
+			console.log(err)
+		})
+	  
+	  };
   
 
   return (
     <SafeAreaView style={styles.root}>
-      {!clicked && <Text style={styles.title}>Search Products</Text>}
 
-      <SearchBar
+      <Header
         searchPhrase={searchPhrase}
         setSearchPhrase={setSearchPhrase}
-        // clicked={clicked}
         getData={getData}
         setClicked={setClicked}
       />
-      {!fakeData ? (
+      {!data ? (
         // <ActivityIndicator size="large" />
         <Text>Search Something..</Text>
       ) : (
-        fakeData.length> 0 ? 
+        data.length> 0 ? 
           <View style={styles.container}>
 
           <FlatList 
               keyExtractor={(item) => item._id} 
-              data={fakeData} 
+              data={data} 
               renderItem={item=> renderData(item)}
           />
       

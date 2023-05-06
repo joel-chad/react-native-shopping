@@ -1,21 +1,22 @@
 import React, {useState} from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import UserServices from '../../services/UserServices'
+import { useEffect } from 'react';
 
-const SignIn =({navigation})=>{
-//   state={
-//     email:"",
-//     password:""
-//   }
+const SignIn =(props)=>{
+
     const [email, setEmail] = useState('')
     const [password, setPassword] =useState('')
 
     const handlePress = () => {
-      navigation.navigate('SignUp');
+      props.navigation.navigate('SignUp');
     };
+    
+
 
     const login = () =>{
-      console.log("logged in")
+      // console.log("logged in")
       let data = {
         "email": email,
         "password": password
@@ -23,9 +24,12 @@ const SignIn =({navigation})=>{
 
       UserServices.login(data)
       .then(res=>{
-        console.log(res);
+        // console.log(res);
+        props.setSignedIn(true)
+        console.log(props.isSignedIn)
                 if (res.status === 200 || res.status === 201||res.status === 204) {
-                    console.log(res)
+                    console.log('res')
+                   
                     // setLoading(false);
                 } 
       }).catch(err=>{

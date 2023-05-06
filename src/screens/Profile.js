@@ -4,18 +4,41 @@ import Icon from '@expo/vector-icons/Ionicons';
 import s from '../../styles/mainStyle';
 import { useState } from "react/cjs/react.development";
 const {width,height}=Dimensions.get('window');
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import UserServices from "../services/UserServices";
+import { useEffect } from "react";
 
 const TopContent=()=>{
+    const [name, setName] = useState('')
+    const [email, setEmail] = useState('')
+    const [id, setId] = useState('')
+
+    const retrieveData = async ()=>{
+        try{
+            const value = await AsyncStorage.getItem('user');
+            const user = JSON.parse(value)
+            setName(user.name)
+            setEmail(user.email)
+            setId(user._id)
+        }
+        catch(err){
+            console.log(err)
+        }
+        
+    }
+
+    useEffect(()=>{
+        retrieveData()
+    }, [])
     return(
         <View style={[s.row,s.pd10,s.bdbt1,s.mgbt20]}>
                 <View style={[s.fl1,s.textCenter]}>
                     <Image source={{uri:'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'}} style={[s.coim,{width:65,height:65}]} />
                 </View>
                 <View style={[s.fl3,s.textCenter,s.pdlt10]}>
-                    <Text style={[s.f18,s.b]}>Alicia Mutsauri</Text>
-                    <Text style={[s.f14,s.pdtp5]}>Wonderful Lady.</Text>
-                    <Text style={[s.f14]}>552211</Text>
+                    <Text style={[s.f18,s.b]}>{name}</Text>
+                    <Text style={[s.f14,s.pdtp5]}>{email}</Text>
+                    <Text style={[s.f14]}>{id}</Text>
                 </View>
                 <View style={[s.flsemi]}>
                     <Text>

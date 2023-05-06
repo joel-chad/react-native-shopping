@@ -3,7 +3,7 @@ import {AsyncStorage} from '@react-native-async-storage/async-storage'
 import endpointNames from "../configs/serverUrls";
 
 const itemsUrl = endpointNames.item
-let token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2M2Y2YmJiMGQ3N2MwMTZiMGFiMmMwMTMiLCJpYXQiOjE2Nzc1NDY2NjJ9.fw-dwLAVfoaPz9ny0i69iRolYnYxuTpCsIgJ-Mht0zk'
+// let token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2M2Y2YmJiMGQ3N2MwMTZiMGFiMmMwMTMiLCJpYXQiOjE2Nzc1NDY2NjJ9.fw-dwLAVfoaPz9ny0i69iRolYnYxuTpCsIgJ-Mht0zk'
 
 const getAllItems = async () => {
     
@@ -34,6 +34,7 @@ const getItemById = async id =>{
 }
 
 const searchItems = async searchQuery=>{
+    const token = await AsyncStorage.getItem('token')
     let response;
     const options = {
         headers : {'Authorization': `Bearer ${token}`,

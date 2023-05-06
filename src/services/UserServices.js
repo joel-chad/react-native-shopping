@@ -11,9 +11,10 @@ let headers
 const login = async (data) => {
     let response
     await axios.post(userUrl + '/login', data).then((r) => {
-        console.log("response ", r.data.token)
+        // console.log("response ", r.data.token)
         response = r.data;
         AsyncStorage.setItem('token', r.data.token)
+        AsyncStorage.setItem('user',  JSON.stringify(r.data.user))
     })
     .catch(err => {
         response = err;

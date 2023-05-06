@@ -8,7 +8,7 @@ import MetaInfo from '../../components/universal/MetaInfo'
 import s from '../../../styles/mainStyle';
 
 
-export default function ProductInfo({ route }) {
+export default function ProductInfo({ navigation, route }) {
   const [productInfo, setproductInfo] = useState('');
   const [isLoading,setisLoading]=useState(true);
   

@@ -4,7 +4,6 @@ import CartServices from '../services/CartServices';
 export default class CartContext extends React.Component{
 state = {
   items: [],
-  // signedIn: false
 }
  
 componentDidMount(){
@@ -27,6 +26,8 @@ addNewItem = () => {
     })
 };
 
+
+
 deleteItem = () => {
   CartServices.getCartItems()
     .then(res=>{
@@ -36,6 +37,8 @@ deleteItem = () => {
       console.log(err)
     })
 };
+
+
  
 // deleteItem = (itemId) => {
 //   this.setState(this.state.items.splice(itemId,1));
@@ -47,7 +50,8 @@ render(){
     // signedIn: this.state.signedIn,
     items: this.state.items,
     addNewItem: this.addNewItem,
-    deleteItem: this.deleteItem
+    deleteItem: this.deleteItem,
+   
    }}
   >
    {this.props.children}
