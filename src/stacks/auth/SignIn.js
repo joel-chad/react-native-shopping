@@ -1,13 +1,15 @@
 import React, {useState} from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, ActivityIndicator } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import UserServices from '../../services/UserServices'
 import { useEffect } from 'react';
+import s from '../../../styles/mainStyle';
 
 const SignIn =(props)=>{
 
     const [email, setEmail] = useState('')
     const [password, setPassword] =useState('')
+    const [loading, setLoading] =useState(false)
 
     const handlePress = () => {
       props.navigation.navigate('SignUp');
@@ -21,7 +23,7 @@ const SignIn =(props)=>{
         "email": email,
         "password": password
       }
-
+      setLoading(true)
       UserServices.login(data)
       .then(res=>{
         // console.log(res);
@@ -30,7 +32,7 @@ const SignIn =(props)=>{
                 if (res.status === 200 || res.status === 201||res.status === 204) {
                     console.log('res')
                    
-                    // setLoading(false);
+                    setLoading(false);
                 } 
       }).catch(err=>{
         console.log(err)
@@ -38,7 +40,16 @@ const SignIn =(props)=>{
     }
 
     return (
+      
       <View style={styles.container}>
+        {
+          loading ?
+          <>
+          <View style={[s.fl1,s.tocnt,s.mgtp20]}>
+				    <ActivityIndicator size={'small'} />
+			    </View>
+      </> :
+        <>
         {/* <Text style={styles.logo}>Runner</Text> */}
         <View style={styles.inputView} >
           <TextInput  
@@ -64,8 +75,8 @@ const SignIn =(props)=>{
         <TouchableOpacity onPress={handlePress}>
           <Text style={styles.signupText}>Don't have an account? Sign Up.</Text>
         </TouchableOpacity>
-
-  
+        </>
+        }
       </View>
     );
   }

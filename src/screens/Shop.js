@@ -1,6 +1,6 @@
 // Home.js
 import React, { useState, useEffect } from "react";
-import {Dimensions,View,Text,TextInput, SafeAreaView, FlatList, StyleSheet} from 'react-native'
+import {Dimensions,View,Text,TextInput, SafeAreaView, FlatList, StyleSheet, ActivityIndicator} from 'react-native'
 import Icon from '@expo/vector-icons/Ionicons'
 import { ListItem, Avatar } from 'react-native-elements';
 import s from '../../styles/mainStyle';
@@ -17,6 +17,7 @@ const Home = ({navigation}) => {
   const [searchPhrase, setSearchPhrase] = useState("");
   const [clicked, setClicked] = useState(false);
   const [data, setData] = useState();
+  const [loading, setLoading] = useState(false)
 
 
   
@@ -50,13 +51,16 @@ const Home = ({navigation}) => {
   
   const getData = async () => {
 		console.log(searchPhrase)
+    setLoading(true)
 		ItemServices.searchItems(searchPhrase)
 		.then(res=>{
+      setLoading(false)
 			setData(res)
 			console.log(res)
 		})
 		.catch(err=>{
 			console.log(err)
+      setLoading(false)
 		})
 	  
 	  };
@@ -70,10 +74,12 @@ const Home = ({navigation}) => {
         setSearchPhrase={setSearchPhrase}
         getData={getData}
         setClicked={setClicked}
+        setData={setData}
       />
+      
       {!data ? (
         // <ActivityIndicator size="large" />
-        <Text>Search Something..</Text>
+        <Text style={styles.text}>Search Something..</Text>
       ) : (
         data.length> 0 ? 
           <View style={styles.container}>
@@ -85,9 +91,11 @@ const Home = ({navigation}) => {
           />
       
           </View>
-      :<Text>Loading..</Text>
+      :
+      <Text>Loading..</Text>
         
       )}
+      
     </SafeAreaView>
   );
 };
@@ -138,5 +146,8 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginLeft: 10,
     width: "90%",
+  },
+  text:{
+    marginTop: 20
   }
 });

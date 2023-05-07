@@ -29,6 +29,7 @@ export default function Cart() {
         CartServices.getCartItems()
             .then(res=>{
                 setBill(res.bill)
+                console.log(res.bill)
                 // setData(res.items)
                 // data.forEach(item=>{
                 //   context.addNewItem(item)
@@ -46,7 +47,7 @@ export default function Cart() {
       .then(res=>{
         console.log(res)
         context.deleteItem()
-        setBill(0)
+        setBill('')
         setLoading(false)
         Alert.alert('Alert Title', `Checkout Done. You will pay ${res.order.bill}.\n Please check
         delivery details in the Orders tab on your profile` , [
@@ -83,7 +84,7 @@ export default function Cart() {
     useEffect(()=>{
       getSavedProducts()
       // console.log(context.items)
-    }, [])
+    }, [context.items])
   
         return(
         context.items == undefined || context.items == [] || context.items.length==0 ?

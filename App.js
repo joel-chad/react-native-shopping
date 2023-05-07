@@ -49,7 +49,7 @@ export default function App() {
         try{
           if (value !== null) {
             //   console.log(value)
-              setSignedIn(true);
+              setSignedIn(false);
             }
           else{
               setSignedIn(true);

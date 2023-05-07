@@ -10,16 +10,6 @@ import Banner from '../components/universal/banner';
 import Header from '../components/universal/header.js';
 import ItemServices from '../services/ItemServices'
 
-import {
-	db,
-	auth,
-	getProducts,
-	// createProducts,
-	updateProducts,
-	createUser,
-	signInUser,
-	signOutUser,
-  } from "../../methods";
 
 export default function Home() {
 	

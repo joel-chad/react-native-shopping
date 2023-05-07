@@ -1,5 +1,5 @@
 import axios from "axios";
-import {AsyncStorage} from '@react-native-async-storage/async-storage'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import endpointNames from "../configs/serverUrls";
 
 const itemsUrl = endpointNames.item
@@ -35,6 +35,7 @@ const getItemById = async id =>{
 
 const searchItems = async searchQuery=>{
     const token = await AsyncStorage.getItem('token')
+    console.log(token)
     let response;
     const options = {
         headers : {'Authorization': `Bearer ${token}`,

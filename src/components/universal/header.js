@@ -18,30 +18,11 @@ export default function Header(props){
 		if(text.length>1){
 			props.getData(text)
 		}
+		else{
+			props.setData([])
+		}
 	}
 
-	// const renderData = ({item}) => (
-	// 	<ListItem bottomDivider>
-	// 	 <ListItem.Content>
-	// 	   <ListItem.Title style={{color:'black', fontSize: 18}}>{item.name}</ListItem.Title>
-	// 	   <ListItem.Subtitle style={{color: 'black'}}>{`Order Number: ${item.description}`}</ListItem.Subtitle>
-	// 	   <ListItem.Subtitle style={{color: 'black'}}>{`$${item.price}`}</ListItem.Subtitle>
-	// 	 </ListItem.Content>
-	//    </ListItem>
-	//   );
-	  
-	//   const getData = async () => {
-	// 	console.log(searchPhrase)
-	// 	ItemServices.searchItems(searchPhrase)
-	// 	.then(res=>{
-	// 		props.setData(res)
-	// 		console.log(res)
-	// 	})
-	// 	.catch(err=>{
-	// 		console.log(err)
-	// 	})
-	  
-	//   };
 
     return(
         <View style={[s.row,s.rowflStart,s.pdlt10,s.mgbt20,s.pdtp10,s.pdbt10]}>
