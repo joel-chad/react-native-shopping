@@ -1,7 +1,8 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, {useState} from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, ActivityIndicator } from 'react-native';
 import UserServices from '../../services/UserServices';
+import s from '../../../styles/mainStyle';
 
 const SignUp =({navigation})=>{
 //   state={
@@ -12,6 +13,7 @@ const SignUp =({navigation})=>{
     const [password, setPassword] =useState('')
     const [name, setName]= useState('')
     const [address, setAddress]= useState('')
+    const [loading, setLoading] = useState(false)
 
     const handlePress = () => {
       navigation.navigate('SignIn');
@@ -25,19 +27,29 @@ const SignUp =({navigation})=>{
         "password": password,
         'address': address
       }
+      setLoading(true)
       UserServices.storeUser(data)
       .then(res=>{
        console.log(res)
+       setLoading(false)
       //  navigation.navigate('Home')
       })
       .catch(err=>{
         console.log(err)
+        setLoading(false)
       })
     }
 
     return (
       <View style={styles.container}>
         {/* <Text style={styles.logo}>Runner</Text> */}
+        {
+          loading? 
+          <View style={styles.activity}>
+          <ActivityIndicator size={'small'} />
+          </View>
+        :
+          <>
         <View style={styles.inputView} >
           <TextInput  
             style={styles.inputText}
@@ -76,8 +88,8 @@ const SignUp =({navigation})=>{
         <TouchableOpacity>
           <Text onPress={handlePress} style={styles.accountText}>Already have an account? Sign In.</Text>
         </TouchableOpacity>
-
-  
+        </>
+        }
       </View>
     );
   }

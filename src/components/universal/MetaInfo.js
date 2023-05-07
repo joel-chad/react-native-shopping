@@ -1,33 +1,55 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, ActivityIndicator } from "react-native";
 import React, { useState, useContext } from "react";
 import CartServices from '../../services/CartServices'
 import { height, heightToDp, widthToDp } from "rn-responsive-screen";
 import NumericInput from 'react-native-numeric-input'
 import context from "../../context/context";
+import Toast from 'react-native-toast-message';
+import s from "../../../styles/mainStyle";
 
 export default function MetaInfo({ product }) {
   const [activeSize, setActiveSize] = useState(0);
   const [quantity, setQuantity] = useState(1)
   const [items, setItems] = useState([])
   const CartContext = useContext(context)
+  const [loading, setLoading] = useState(false)
+
+  const showToast = () => {
+    Toast.show({
+      type: 'success',
+      text1: 'Yay!',
+      text2: 'The product has been added to the cart 👋'
+    });
+  }
 
   const handlePress = () =>{
     let data = {
       itemId: product._id,
       quantity: quantity
     }
+    setLoading(true)
+
     CartServices.addToCart(data)
     .then(res=>{
       setItems(res.items)
       console.log(items)
         CartContext.addNewItem()
+        setLoading(false)
+        showToast
     }).catch(err=>{
       console.log(err)
+      setLoading(false)
     })
   }
 
   return (
     <View style={styles.container}>
+      {
+        loading? 
+        <View style={styles.activity}>
+        <ActivityIndicator size={'small'} />
+      </View>
+      :
       <View style={styles.row}>
         <Text style={styles.title}>{product.name}</Text>
         <View>
@@ -37,6 +59,7 @@ export default function MetaInfo({ product }) {
           <Text style={styles.star}>⭐⭐⭐</Text>
         </View>
       </View>
+      }
       {/* <Text style={styles.heading}>Available Sizes</Text> */}
       {/* <View style={styles.row}>
         {product.options[0].values.map((size, index) => (
